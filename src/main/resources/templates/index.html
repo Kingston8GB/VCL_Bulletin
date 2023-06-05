@@ -6,7 +6,7 @@
 	<link rel="icon" href="https://static.nowcoder.com/images/logo_87_87.png"/>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
 	<link rel="stylesheet" th:href="@{/css/global.css}" />
-	<title>论坛-首页</title>
+	<title>VCL Bulletin-Homepage</title>
 </head>
 <body>	
 	<div class="nk-container">
@@ -22,6 +22,7 @@
 					</button>
 					<!-- 功能 -->
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+
 						<ul class="navbar-nav mr-auto">
 							<li class="nav-item ml-3 btn-group-vertical">
 								<a class="nav-link" href="index.html">首页</a>
@@ -140,7 +141,7 @@
 					</li>
 				</ul>
 				<!-- 分页 -->
-				<nav class="mt-5">
+				<nav class="mt-5" th:if="${page.rows>0}">
 					<ul class="pagination justify-content-center">
 						<li class="page-item">
 							<a class="page-link" th:href="@{${page.path}(current=1)}">首页</a>
