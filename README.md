@@ -1,4 +1,4 @@
-![VCL Bulletin](M:\2023\java\community\src\main\resources\static\img\title.png)
+![VCL Bulletin](src\main\resources\static\img\title.png)
 
 
 
