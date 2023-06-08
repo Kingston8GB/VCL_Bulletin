@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
@@ -99,6 +100,22 @@ public class AlphaController {
         emps.add(emp);
 
         return emps;
+    }
+
+    @GetMapping("/session/set")
+    @ResponseBody
+    public String setSession(HttpSession httpSession){
+        httpSession.setAttribute("id",1);
+        httpSession.setAttribute("name","lxy");
+        return "lxy session";
+    }
+
+    @GetMapping("/session/get")
+    @ResponseBody
+    public String getSession(HttpSession httpSession){
+        System.out.println(httpSession.getAttribute("id"));
+        System.out.println(httpSession.getAttribute("name"));
+        return "lxy get session";
     }
 
 }
