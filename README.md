@@ -1,6 +1,8 @@
-# <font color='purple'>VCL Bulletin</font>
+![VCL Bulletin](M:\2023\java\community\src\main\resources\static\img\title.png)
 
-![VCL Bulletin](src/main/resources/static/img/title.png)
+
+
+# <font color='purple'>VCL Bulletin</font>
 
 A community for daily work of SCUVIS.
 
@@ -17,7 +19,6 @@ A community for daily work of SCUVIS.
 **Dev Log:**
 
 (The project started on 20230603, which is under construction now…)
-
 
 20230606: 开发社区首页
 
