@@ -1,6 +1,6 @@
 # <font color='purple'>VCL Bulletin</font>
 
-![VCL Bulletin](.\src\main\resources\static\img\title.png)
+![VCL Bulletin](src/main/resources/static/img/title.png)
 
 A community for daily work of SCUVIS.
 
