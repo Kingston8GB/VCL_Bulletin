@@ -160,4 +160,33 @@ public class UserService {
     public void logout(String ticket){
         loginTicketMapper.updateStatus(ticket,1);
     }
+
+    public LoginTicket findLoginTicket(String ticket){
+        return loginTicketMapper.selectLoginTicketByTicket(ticket);
+    }
+
+    public int updateHeader(int userId, String headerUrl){
+        return userMapper.updateHeader(userId, headerUrl);
+    }
+
+    /**
+     * 修改密码
+     * @param user 当前登录用户（controller层从hostHolder里取到的）
+     * @param oldPassword 旧密码
+     * @param newPassword 新密码
+     * @return 修改密码的提示信息(一些格式的判断直接在controller层处理，这一层只做业务）
+     */
+    public Map<String,Object> updatePassword(User user,String oldPassword,String newPassword){
+        Map<String, Object> map = new HashMap<>();
+
+        // User u = userMapper.selectByName(user.getUsername());
+        String oldPasswordByMd5 = CommunityUtil.md5(oldPassword + user.getSalt());
+        if(!oldPasswordByMd5.equals(user.getPassword())){
+            map.put("oldPasswordMsg","原密码错误！");
+            return map;
+        }
+        String newPasswordByMd5 = CommunityUtil.md5(newPassword + user.getSalt());
+        int affectedRows = userMapper.updatePassword(user.getId(), newPasswordByMd5);
+        return map;
+    }
 }
