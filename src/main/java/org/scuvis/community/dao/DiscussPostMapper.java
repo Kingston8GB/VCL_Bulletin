@@ -17,4 +17,6 @@ public interface DiscussPostMapper {
                                          @Param("limit") int limit);
 
     int selectDiscussPostRowsByUserId(@Param("userId") int userId);
+
+    int insertDiscussPost(DiscussPost discussPost);
 }

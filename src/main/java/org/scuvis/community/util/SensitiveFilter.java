@@ -94,16 +94,17 @@ public class SensitiveFilter {
                    continue;
                }
 
-               TrieNode subNode = p1.getSubNode(c);
-               if(subNode == null){
+               p1 = p1.getSubNode(c);
+               if(p1 == null){
                    // 证明不是敏感词
                    sb.append(text.charAt(p2));
                    p3 = ++p2;
                    p1 = rootNode;
-               }else if(subNode.isKeyWordEnd){
+               }else if(p1.isKeyWordEnd){
                    // 找到敏感词
                    sb.append(REPLACEMENT);
                    p2 = ++p3;
+                   p1 = rootNode;
                }else{
                    p3++;
                }
