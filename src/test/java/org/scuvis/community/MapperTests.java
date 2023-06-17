@@ -4,13 +4,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.scuvis.community.dao.AlphaDao;
 import org.scuvis.community.dao.DiscussPostMapper;
+import org.scuvis.community.dao.MessageMapper;
 import org.scuvis.community.dao.UserMapper;
 import org.scuvis.community.entity.DiscussPost;
+import org.scuvis.community.entity.Message;
 import org.scuvis.community.entity.User;
 import org.scuvis.community.service.AlphaService;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -29,6 +32,9 @@ class MapperTests {
 	private UserMapper userMapper;
 	@Autowired
 	private DiscussPostMapper discussPostMapper;
+
+	@Autowired
+	MessageMapper messageMapper;
 
 	@Test
 	public void testSelectAndInsert(){
@@ -49,5 +55,25 @@ class MapperTests {
 
 		int count = discussPostMapper.selectDiscussPostRowsByUserId(149);
 		System.out.println(count);
+	}
+
+	@Test
+	public void testSelectLetters(){
+		List<Message> messages = messageMapper.selectConversations(111, 0, 15);
+		for (Message message : messages) {
+			System.out.println(message);
+		}
+
+		System.out.println(messageMapper.selectConversationCount(111));
+
+		List<Message> letters = messageMapper.selectLetters("111_112", 0, 15);
+		for (Message letter : letters) {
+			System.out.println(letter);
+		}
+
+		System.out.println(messageMapper.selectLetterCount("111_112"));
+
+		System.out.println(messageMapper.selectLetterUnreadCount(131, "111_131"));
+
 	}
 }
