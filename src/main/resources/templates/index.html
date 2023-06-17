@@ -145,12 +145,15 @@
 								<ul class="d-inline float-right">
 									<li class="d-inline ml-2">赞 11</li>
 									<li class="d-inline ml-2">|</li>
-									<li class="d-inline ml-2">回帖 7</li>
+									<li class="d-inline ml-2">回帖</li>
+									<li class="d-inline ml-2" th:utext="${map.post.commentCount}">7</li>
 								</ul>
 							</div>
 						</div>						
 					</li>
 				</ul>
+
+
 				<!-- 分页 -->
 				<nav class="mt-5" th:if="${page.rows>0}">
 					<ul class="pagination justify-content-center">
@@ -170,6 +173,8 @@
 						</li>
 					</ul>
 				</nav>
+
+
 			</div>
 		</div>
 
@@ -179,7 +184,8 @@
 				<div class="row">
 					<!-- 二维码 -->
 					<div class="col-4 qrcode">
-						<img src="https://uploadfiles.nowcoder.com/app/app_download.png" class="img-thumbnail" style="width:136px;" />
+<!--						<img src="https://uploadfiles.nowcoder.com/app/app_download.png" class="img-thumbnail" style="width:136px;" />-->
+						<img src="/community/img/vcl_site_qrcode.png" class="img-thumbnail" style="width:136px;" />
 					</div>
 					<!-- 公司信息 -->
 					<div class="col-8 detail-info">
@@ -223,10 +229,10 @@
 										SCUVIS © 2023 All rights reserved
 									</li>
 									<li class="nav-item text-white-50">
-										京ICP备14055008号-4 &nbsp;&nbsp;&nbsp;&nbsp;
-<!--										<img src="http://static.nowcoder.com/company/images/res/ghs.png" style="width:18px;" />-->
-										<img src="/community/img/VCLlogo_transparent.png" style="width:18px;" />
-										京公网安备 11010502036488号
+										蜀ICP备14055008号-4 &nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="http://static.nowcoder.com/company/images/res/ghs.png" style="width:18px;" />
+<!--										<img src="/community/img/VCLlogo_transparent.png" style="width:18px;" />-->
+										蜀公网安备 11010502036488号
 									</li>
 								</ul>
 							</div>
