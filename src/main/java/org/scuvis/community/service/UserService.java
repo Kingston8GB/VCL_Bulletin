@@ -189,4 +189,8 @@ public class UserService {
         int affectedRows = userMapper.updatePassword(user.getId(), newPasswordByMd5);
         return map;
     }
+
+    public User findUserByName(String username){
+        return userMapper.selectByName(username);
+    }
 }
