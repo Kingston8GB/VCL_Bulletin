@@ -21,4 +21,8 @@ public class ReplyVO {
     private User userOfReply;
 
     private User target;
+
+    private int replyLikeCount;
+
+    private int replyLikeStatus;
 }

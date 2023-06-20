@@ -23,4 +23,8 @@ public class CommentVO {
     private List<ReplyVO> replyVOList;
 
     private int replyCount;
+
+    private int commentLikeCount;
+
+    private int commentLikeStatus;
 }

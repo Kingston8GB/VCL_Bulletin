@@ -5,6 +5,7 @@ import org.scuvis.community.entity.Page;
 import org.scuvis.community.entity.User;
 import org.scuvis.community.entity.vo.CommentVO;
 import org.scuvis.community.service.DiscussPostService;
+import org.scuvis.community.service.LikeService;
 import org.scuvis.community.service.UserService;
 import org.scuvis.community.util.CommunityUtil;
 import org.scuvis.community.util.HostHolder;
@@ -32,6 +33,9 @@ public class DiscussPostController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    LikeService likeService;
+
     @GetMapping("/detail/{discussPostId}")
     public String getDiscussPost(@PathVariable("discussPostId") int discussPostId, Model model, Page page){
         DiscussPost discussPost = discussPostService.findDiscussPostById(discussPostId);
@@ -46,6 +50,8 @@ public class DiscussPostController {
 
         List<CommentVO> commentVOS = discussPostService.findCommentsByEntity(1, discussPost.getId(), page.getOffset(), page.getLimit());
         model.addAttribute("comments",commentVOS);
+        model.addAttribute("likeCount",likeService.findEntityLikeCount(1,discussPostId));
+        model.addAttribute("likeStatus",likeService.findEntityLikeStatus(hostHolder.getUser().getId(),1,discussPostId));
         return "/site/discuss-detail";
     }
 

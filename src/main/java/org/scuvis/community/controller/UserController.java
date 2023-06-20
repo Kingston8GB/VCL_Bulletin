@@ -3,6 +3,7 @@ package org.scuvis.community.controller;
 import org.apache.commons.lang3.StringUtils;
 import org.scuvis.community.annotation.LoginRequired;
 import org.scuvis.community.entity.User;
+import org.scuvis.community.service.LikeService;
 import org.scuvis.community.service.UserService;
 import org.scuvis.community.util.CommunityUtil;
 import org.scuvis.community.util.HostHolder;
@@ -51,6 +52,9 @@ public class UserController {
 
     @Autowired
     private HostHolder hostHolder;
+
+    @Autowired
+    private LikeService likeService;
 
     @LoginRequired
     @GetMapping("/setting")
@@ -148,5 +152,18 @@ public class UserController {
             return "/site/setting";
         }
         return "redirect:/index";
+    }
+
+    @GetMapping("/profile/{userId}")
+    public String getProfilePage(@PathVariable("userId") int userId,Model model){
+        User userById = userService.findUserById(userId);
+        if(userById == null){
+            throw new IllegalArgumentException("错误的用户参数！");
+        }
+        int userLikeCount = (int) likeService.findUserLikeCount(userId);
+        model.addAttribute("userLikeCount",userLikeCount);
+        model.addAttribute("userId",userId);
+        model.addAttribute("user",userById);
+        return "/site/profile";
     }
 }

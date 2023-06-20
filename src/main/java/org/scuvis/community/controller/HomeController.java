@@ -3,6 +3,7 @@ package org.scuvis.community.controller;
 import org.scuvis.community.entity.DiscussPost;
 import org.scuvis.community.entity.Page;
 import org.scuvis.community.service.DiscussPostService;
+import org.scuvis.community.service.LikeService;
 import org.scuvis.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,9 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    LikeService likeService;
+
     @GetMapping({"/index","/index*"})
     public String getIndexPage(Model model, Page page){
         // page已经自动注入到model里了
@@ -44,6 +48,7 @@ public class HomeController {
                 Map<String, Object> map = new HashMap<>();
                 map.put("post",discussPost);
                 map.put("user",userService.findUserById(discussPost.getUserId()));
+                map.put("likeCount",likeService.findEntityLikeCount(1,discussPost.getId()));
                 discussPosts.add(map);
             }
         }
