@@ -8,6 +8,8 @@ package org.scuvis.community.util;
 public class RedisUtil {
     public static final String PREFIX_LIKE_ENTITY = "like:entity:";
     public static final String PREFIX_LIKE_USER = "like:user:";
+    public static final String PREFIX_FOLLOWER = "follower:";
+    public static final String PREFIX_LIKE_USER = "like:user:";
 
     public static final String SPLIT = ":";
 
