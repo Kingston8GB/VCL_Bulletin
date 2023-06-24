@@ -9,7 +9,7 @@ public class RedisUtil {
     public static final String PREFIX_LIKE_ENTITY = "like:entity:";
     public static final String PREFIX_LIKE_USER = "like:user:";
     public static final String PREFIX_FOLLOWER = "follower:";
-    public static final String PREFIX_LIKE_USER = "like:user:";
+    public static final String PREFIX_FOLLOWEE = "followee:";
 
     public static final String SPLIT = ":";
 
@@ -30,6 +30,14 @@ public class RedisUtil {
      */
     public static String getUserLikeKey(int userId){
         return PREFIX_LIKE_USER + userId;
+    }
+
+    public static String getFollowerKey(int entityType, int entityId){
+        return PREFIX_FOLLOWER + entityType + SPLIT + entityId;
+    }
+
+    public static String getFolloweeKey(int userId, int entityType){
+        return PREFIX_FOLLOWEE + userId + SPLIT + entityType;
     }
 
 }

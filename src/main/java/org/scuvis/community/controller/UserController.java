@@ -3,6 +3,7 @@ package org.scuvis.community.controller;
 import org.apache.commons.lang3.StringUtils;
 import org.scuvis.community.annotation.LoginRequired;
 import org.scuvis.community.entity.User;
+import org.scuvis.community.service.FollowService;
 import org.scuvis.community.service.LikeService;
 import org.scuvis.community.service.UserService;
 import org.scuvis.community.util.CommunityUtil;
@@ -55,6 +56,9 @@ public class UserController {
 
     @Autowired
     private LikeService likeService;
+
+    @Autowired
+    FollowService followService;
 
     @LoginRequired
     @GetMapping("/setting")
@@ -161,9 +165,17 @@ public class UserController {
             throw new IllegalArgumentException("错误的用户参数！");
         }
         int userLikeCount = (int) likeService.findUserLikeCount(userId);
+
+        long followerCount = followService.findFollowerCount(3, userId);
+        Long followeeCount = followService.findFolloweeCount(3, userId);
+        boolean hasFollowed = followService.hasFollowed(hostHolder.getUser().getId(), 3, userId);
+
         model.addAttribute("userLikeCount",userLikeCount);
         model.addAttribute("userId",userId);
         model.addAttribute("user",userById);
+        model.addAttribute("followerCount",followerCount);
+        model.addAttribute("followeeCount",followeeCount);
+        model.addAttribute("hasFollowed",hasFollowed);
         return "/site/profile";
     }
 }
