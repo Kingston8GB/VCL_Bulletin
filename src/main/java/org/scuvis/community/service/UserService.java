@@ -149,7 +149,12 @@ public class UserService {
         loginTicket.setTicket(CommunityUtil.generateUUID());
         loginTicket.setStatus(0);
         loginTicket.setExpired(new Date(System.currentTimeMillis() + expiredSeconds * 1000));
-        loginTicketMapper.insertLoginTicket(loginTicket);
+        // loginTicketMapper.insertLoginTicket(loginTicket);
+
+        // 改为存入redis
+
+
+
 
         // 把凭证返回给客户端
         map.put("ticket",loginTicket.getTicket());

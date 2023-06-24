@@ -16,4 +16,6 @@ import java.util.Date;
 public class Follower {
     User follower;
     Date followTime;
+
+    boolean hasFollowed;
 }

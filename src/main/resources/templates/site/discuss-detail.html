@@ -125,7 +125,7 @@
 				<ul class="list-unstyled mt-4" th:each="cvo:${comments}">
 					<!-- 第1条回帖 -->
 					<li class="media pb-3 pt-3 mb-3 border-bottom">
-						<a th:href="@{|/user/profile/${user.id}|}">
+						<a th:href="@{|/user/profile/${cvo.userOfComment.id}|}">
 							<img th:src="${cvo.userOfComment.headerUrl}" class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >
 						</a>
 						<div class="media-body">

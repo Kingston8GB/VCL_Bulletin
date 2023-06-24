@@ -164,7 +164,7 @@ public class UserController {
         if(userById == null){
             throw new IllegalArgumentException("错误的用户参数！");
         }
-        int userLikeCount = (int) likeService.findUserLikeCount(userId);
+        int userLikeCount = likeService.findUserLikeCount(userId);
 
         long followerCount = followService.findFollowerCount(3, userId);
         Long followeeCount = followService.findFolloweeCount(3, userId);

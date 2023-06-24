@@ -68,6 +68,7 @@ public class FollowController {
         if(userById == null){
             throw new IllegalArgumentException("该用户id不存在！");
         }
+        model.addAttribute("user",userById);
 
         page.setLimit(5);
         page.setPath("/followees/" + userId);
@@ -78,7 +79,7 @@ public class FollowController {
             Map<String, Object> map = new HashMap<>();
             for (Followee followee : followeeList) {
                 User u = followee.getFollowee();
-                map.put("hasFollowed",hasFollowed(u.getId()));
+                followee.setHasFollowed(hasFollowed(u.getId()));
             }
         }
 
@@ -97,6 +98,7 @@ public class FollowController {
         if(userById == null){
             throw new IllegalArgumentException("该用户id不存在！");
         }
+        model.addAttribute("user",userById);
 
         page.setLimit(5);
         page.setPath("/followers/" + userId);
@@ -107,7 +109,7 @@ public class FollowController {
             Map<String, Object> map = new HashMap<>();
             for (Follower follower : followerList) {
                 User u = follower.getFollower();
-                map.put("hasFollowed",hasFollowed(u.getId()));
+                follower.setHasFollowed(hasFollowed(u.getId()));
             }
         }
 

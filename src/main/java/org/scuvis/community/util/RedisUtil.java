@@ -11,6 +11,9 @@ public class RedisUtil {
     public static final String PREFIX_FOLLOWER = "follower:";
     public static final String PREFIX_FOLLOWEE = "followee:";
 
+    public static final String PREFIX_KAPTCHA = "kaptcha:";
+    public static final String PREFIX_TICKET = "ticket:";
+
     public static final String SPLIT = ":";
 
     /**
@@ -38,6 +41,14 @@ public class RedisUtil {
 
     public static String getFolloweeKey(int userId, int entityType){
         return PREFIX_FOLLOWEE + userId + SPLIT + entityType;
+    }
+
+    public static String getKaptchaKey(String owner){
+        return PREFIX_KAPTCHA + owner;
+    }
+
+    public static String getTicketKey(String ticket){
+        return PREFIX_TICKET + ticket;
     }
 
 }
