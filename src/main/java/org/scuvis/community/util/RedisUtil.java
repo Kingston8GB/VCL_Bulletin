@@ -13,6 +13,7 @@ public class RedisUtil {
 
     public static final String PREFIX_KAPTCHA = "kaptcha:";
     public static final String PREFIX_TICKET = "ticket:";
+    public static final String PREFIX_USER = "user:";
 
     public static final String SPLIT = ":";
 
@@ -49,6 +50,10 @@ public class RedisUtil {
 
     public static String getTicketKey(String ticket){
         return PREFIX_TICKET + ticket;
+    }
+
+    public static String getUserKey(Integer userId){
+        return PREFIX_TICKET + userId;
     }
 
 }
