@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.HtmlUtils;
 
+import java.util.List;
+
 /**
  * @author Xiyao Li
  * @date 2023/06/17 02:54
@@ -39,6 +41,13 @@ public class CommentService {
             discussPostMapper.updateCommentCount(comment.getEntityId(), count);
         }
         return affectedRows1;
+
+
+    }
+
+    public Comment findCommentByEntityId(int entityId){
+        List<Comment> comments = commentMapper.selectCommentsByEntityId(entityId);
+        return comments != null ? comments.get(0) : null;
     }
 
 }

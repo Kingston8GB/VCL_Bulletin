@@ -43,4 +43,14 @@
         insert into comment (<include refid="insertFields"/>)
         values (#{userId},#{entityType},#{entityId},#{targetId},#{content},#{status},#{createTime})
     </insert>
+
+    <select id="selectCommentsByEntityId" resultType="org.scuvis.community.entity.Comment">
+        select
+        <include refid="selectFields">
+        </include>
+        from comment
+        <where>
+            entity_id = #{entityId}
+        </where>
+    </select>
 </mapper>

@@ -1,11 +1,10 @@
 package org.scuvis.community.controller;
 
-import org.scuvis.community.entity.Followee;
-import org.scuvis.community.entity.Follower;
-import org.scuvis.community.entity.Page;
-import org.scuvis.community.entity.User;
+import org.scuvis.community.entity.*;
+import org.scuvis.community.mq.EventProducer;
 import org.scuvis.community.service.FollowService;
 import org.scuvis.community.service.UserService;
+import org.scuvis.community.util.CommunityConstant;
 import org.scuvis.community.util.CommunityUtil;
 import org.scuvis.community.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ import java.util.Map;
  * @date 2023/06/23 19:50
  */
 @Controller
-public class FollowController {
+public class FollowController implements CommunityConstant {
     @Autowired
     HostHolder hostHolder;
 
@@ -35,6 +34,9 @@ public class FollowController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    EventProducer producer;
 
     @PostMapping("/follow")
     @ResponseBody
@@ -45,6 +47,15 @@ public class FollowController {
         // }
         System.out.println("follow方法！");
         followService.follow(hostHolder.getUser().getId(), entityType, entityId);
+
+        Event event = new Event()
+                .setTopic(TOPIC_FOLLOW)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(entityType)
+                .setEntityId(entityId)
+                .setEntityUserId(entityId);
+        producer.fireEvent(event);
+
         return CommunityUtil.getJSONString(0, "关注成功！", null);
 
     }

@@ -1,5 +1,6 @@
 package org.scuvis.community;
 
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ class Comsumer{
     KafkaTemplate kafkaTemplate;
 
     @KafkaListener(topics = {"test"})
-    public void handle(){
-
+    public void handle(ConsumerRecord record){
+        System.out.println(record.value());
     }
 }

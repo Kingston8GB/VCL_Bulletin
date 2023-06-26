@@ -18,4 +18,9 @@ public interface CommunityConstant {
     int DEFAULT_EXPIRES_SECONDS = 3600 * 12;
 
     int REMEMBER_EXPIRES_SECONDS = 3600 * 24 * 100;
+
+    String TOPIC_COMMENT = "comment";
+    String TOPIC_LIKE = "like";
+    String TOPIC_FOLLOW = "follow";
+    int NOTICE_FROM_ID = 1;
 }
