@@ -1,5 +1,6 @@
 package org.scuvis.community.entity;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -16,7 +17,7 @@ public class Event {
 
     private int entityUserId;
 
-    private Map<String, Object> data;
+    private Map<String, Object> data = new HashMap<>();
     public String getTopic() {
         return topic;
     }
@@ -70,4 +71,5 @@ public class Event {
         this.data.put(key,value);
         return this;
     }
+
 }

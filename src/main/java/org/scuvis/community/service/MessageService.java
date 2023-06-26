@@ -1,13 +1,18 @@
 package org.scuvis.community.service;
 
+import com.alibaba.fastjson.JSONObject;
 import org.scuvis.community.dao.MessageMapper;
+import org.scuvis.community.dao.UserMapper;
 import org.scuvis.community.entity.Message;
+import org.scuvis.community.entity.vo.MessageVO;
 import org.scuvis.community.util.SensitiveFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Xiyao Li
@@ -20,6 +25,9 @@ public class MessageService {
 
     @Autowired
     SensitiveFilter sensitiveFilter;
+
+    @Autowired
+    UserMapper userMapper;
 
     public List<Message> findConversations(int userId, int offset, int limit){
         return messageMapper.selectConversations(userId, offset, limit);
@@ -49,5 +57,34 @@ public class MessageService {
 
     public int readMessage(List<Integer> ids){
         return messageMapper.updateMessageStatus(ids,1);
+    }
+
+    public MessageVO findLatestMessagesByTopic(int userId, String topic){
+        Message latestMessage = messageMapper.selectLatestMessageByTopic(userId, topic);
+        MessageVO messageVO = new MessageVO();
+        if(latestMessage != null){
+            messageVO.setLatestMessage(latestMessage);
+
+            String content = HtmlUtils.htmlUnescape(messageVO.getLatestMessage().getContent());
+            Map<String, Object> data = JSONObject.parseObject(content, HashMap.class);
+            messageVO.setUserOfMessage(userMapper.selectById(userId));
+            messageVO.setEntityIdOfMessage((Integer) data.get("entityId"));
+            messageVO.setEntityTypeOfMessage((Integer) data.get("entityType"));
+            if(!"follow".equals(topic)){
+                messageVO.setPostIdOfMessage((Integer) data.get("postId"));
+            }
+
+            messageVO.setCount(messageMapper.selectNoticeCountByTopic(userId,topic));
+            messageVO.setUnreadCount(messageMapper.selectNoticeUnreadCountByTopic(userId, topic));
+
+        }
+        return messageVO;
+    }
+
+    public int findNoticeCountByTopic(int userId, String topic){
+        return messageMapper.selectNoticeCountByTopic(userId, topic);
+    }
+    public int findNoticeUnreadCountByTopic(int userId, String topic){
+        return messageMapper.selectNoticeUnreadCountByTopic(userId, topic);
     }
 }

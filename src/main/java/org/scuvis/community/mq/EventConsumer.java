@@ -36,7 +36,7 @@ public class EventConsumer implements CommunityConstant {
         Message message = new Message();
         message.setFromId(NOTICE_FROM_ID);
         message.setToId(event.getEntityUserId());
-        message.setConversationId(TOPIC_COMMENT);
+        message.setConversationId(event.getTopic());
         message.setCreateTime(new Date());
 
         Map<String, Object> content = new HashMap<>();

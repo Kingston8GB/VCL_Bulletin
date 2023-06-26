@@ -3,8 +3,10 @@ package org.scuvis.community.controller;
 import org.scuvis.community.entity.Message;
 import org.scuvis.community.entity.Page;
 import org.scuvis.community.entity.User;
+import org.scuvis.community.entity.vo.MessageVO;
 import org.scuvis.community.service.MessageService;
 import org.scuvis.community.service.UserService;
+import org.scuvis.community.util.CommunityConstant;
 import org.scuvis.community.util.CommunityUtil;
 import org.scuvis.community.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ import java.util.*;
  * @date 2023/06/17 15:39
  */
 @Controller
-public class MessageController {
+public class MessageController implements CommunityConstant {
 
     @Autowired
     MessageService messageService;
@@ -32,12 +34,13 @@ public class MessageController {
 
     /**
      * 查询某用户的所有会话（私信）
+     *
      * @param model
      * @param page
      * @return
      */
     @GetMapping("/letter/list")
-    public String getLetterList(Model model, Page page){
+    public String getLetterList(Model model, Page page) {
         User user = hostHolder.getUser();
         // 分页信息
         page.setLimit(5);
@@ -66,13 +69,15 @@ public class MessageController {
         // 查询未读消息数量
         int letterUnreadCount = messageService.findLetterUnreadCount(user.getId(), null);
         model.addAttribute("letterUnreadCount", letterUnreadCount);
+        int noticeUnreadCount = messageService.findNoticeUnreadCountByTopic(user.getId(), null);
+        model.addAttribute("noticeUnreadCount", noticeUnreadCount);
 
         return "/site/letter";
 
     }
 
     @GetMapping("/letter/detail/{conversationId}")
-    public String getLetterDetail(@PathVariable("conversationId") String conversationId, Model model,Page page){
+    public String getLetterDetail(@PathVariable("conversationId") String conversationId, Model model, Page page) {
         User user = hostHolder.getUser();
         // 分页信息
         page.setLimit(5);
@@ -82,15 +87,15 @@ public class MessageController {
         List<Message> lettersList = messageService.findLetters(conversationId, page.getOffset(), page.getLimit());
         // 进一步封装
         List<Map<String, Object>> letters = new ArrayList<>();
-        if(lettersList!=null){
+        if (lettersList != null) {
             for (Message message : lettersList) {
                 Map<String, Object> map = new HashMap<>();
-                map.put("letter",message);
-                map.put("fromUser",userService.findUserById(message.getFromId()));
+                map.put("letter", message);
+                map.put("fromUser", userService.findUserById(message.getFromId()));
                 letters.add(map);
             }
         }
-        model.addAttribute("letters",letters);
+        model.addAttribute("letters", letters);
 
         model.addAttribute("target", getLetterTarget(conversationId));
 
@@ -113,15 +118,13 @@ public class MessageController {
     }
 
 
-
-
     @PostMapping("/letter/send")
     @ResponseBody
-    public String sendLetter(String toName, String content){
+    public String sendLetter(String toName, String content) {
         User target = userService.findUserByName(toName);
         int loginUserId = hostHolder.getUser().getId();
-        if(target == null){
-            return CommunityUtil.getJSONString(1,"目标用户不存在！");
+        if (target == null) {
+            return CommunityUtil.getJSONString(1, "目标用户不存在！");
         }
         Message message = new Message();
         message.setFromId(loginUserId);
@@ -134,7 +137,6 @@ public class MessageController {
         } else {
             message.setConversationId(message.getToId() + "_" + message.getFromId());
         }
-
 
 
         messageService.addMessage(message);
@@ -154,5 +156,31 @@ public class MessageController {
         }
 
         return ids;
+    }
+
+    @GetMapping("/notice/list")
+    public String getNoticeList(Model model){
+
+        User loginUser = hostHolder.getUser();
+        if(loginUser == null){
+            throw new IllegalArgumentException("当前用户未登录！");
+        }
+
+        // 查评论消息
+        MessageVO latestComment = messageService.findLatestMessagesByTopic(loginUser.getId(), TOPIC_COMMENT);
+        model.addAttribute("latestComment",latestComment);
+
+        MessageVO latestLike = messageService.findLatestMessagesByTopic(loginUser.getId(), TOPIC_LIKE);
+        model.addAttribute("latestLike",latestLike);
+
+        MessageVO latestFollow = messageService.findLatestMessagesByTopic(loginUser.getId(), TOPIC_LIKE);
+        model.addAttribute("latestFollow",latestFollow);
+
+        int letterUnreadCount = messageService.findLetterUnreadCount(loginUser.getId(), null);
+        model.addAttribute("letterUnreadCount", letterUnreadCount);
+        // 所有主题算在一起
+        int noticeUnreadCount = messageService.findNoticeUnreadCountByTopic(loginUser.getId(), null);
+        model.addAttribute("noticeUnreadCount", noticeUnreadCount);
+        return "/site/notice";
     }
 }
