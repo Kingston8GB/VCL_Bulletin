@@ -33,4 +33,6 @@ public interface MessageMapper {
     int selectNoticeCountByTopic(@Param("userId") int userId, @Param("topic") String topic);
 
     int selectNoticeUnreadCountByTopic(@Param("userId") int userId, @Param("topic") String topic);
+
+    List<Message> selectNoticesByTopic(@Param("userId") int userId, @Param("topic") String topic, @Param("offset") int offset, @Param("limit") int limit);
 }

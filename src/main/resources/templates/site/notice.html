@@ -66,12 +66,12 @@
 					<!-- 选项 -->
 					<ul class="nav nav-tabs mb-3">
 						<li class="nav-item">
-							<a class="nav-link position-relative active" th:href="@{/letter/list}">
+							<a class="nav-link position-relative" th:href="@{/letter/list}">
 								朋友私信<span class="badge badge-danger" th:text="${letterUnreadCount}" th:if="${letterUnreadCount!=0}">3</span>
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link position-relative" th:href="@{/notice/list}">
+							<a class="nav-link position-relative active" th:href="@{/notice/list}">
 								系统通知<span class="badge badge-danger" th:text="${noticeUnreadCount}" th:if="${noticeUnreadCount!=0}">27</span>
 							</a>
 						</li>
@@ -89,7 +89,7 @@
 								<span class="float-right text-muted font-size-12" th:utext="${#dates.format(latestComment.latestMessage.createTime,'yyyy-MM-dd HH:mm:ss')}">2019-04-28 14:13:25</span>
 							</h6>
 							<div>
-								<a th:href="@{|/notice/detail/${latestComment.postIdOfMessage}}">用户 <i th:utext="${latestComment.userOfMessage.username}">nowcoder</i> 评论了你的<b th:utext="${latestComment.entityTypeOfMessage==1?'帖子':'回复'}">帖子</b> ...</a>
+								<a th:href="@{/notice/detail/comment}">用户 <i th:utext="${latestComment.userOfMessage.username}">nowcoder</i> 评论了你的<b th:utext="${latestComment.entityTypeOfMessage==1?'帖子':'回复'}">帖子</b> ...</a>
 								<ul class="d-inline font-size-12 float-right">
 									<li class="d-inline ml-2"><span class="text-primary">共 <i th:text="${latestComment.count}">3</i> 条会话</span></li>
 								</ul>
@@ -98,36 +98,36 @@
 					</li>
 
 
-					<li class="media pb-3 pt-3 mb-3 border-bottom position-relative">
-						<span class="badge badge-danger">3</span>
+					<li class="media pb-3 pt-3 mb-3 border-bottom position-relative" th:if="${latestLike.latestMessage!=null}">
+						<span class="badge badge-danger" th:utext="${latestLike.unreadCount!=0?latestLike.unreadCount:''}">3</span>
 						<img src="http://static.nowcoder.com/images/head/like.png" class="mr-4 user-header" alt="通知图标">
 						<div class="media-body">
 							<h6 class="mt-0 mb-3">
 								<span>赞</span>
-								<span class="float-right text-muted font-size-12">2019-04-28 14:13:25</span>
+								<span class="float-right text-muted font-size-12" th:utext="${#dates.format(latestLike.latestMessage.createTime,'yyyy-MM-dd HH:mm:ss')}">2019-04-28 14:13:25</span>
 							</h6>
 							<div>
-								<a href="notice-detail.html">用户 <i>nowcoder</i> 点赞了你的<b>帖子</b> ...</a>
+								<a th:href="@{/notice/detail/like}">用户 <i th:utext="${latestLike.userOfMessage.username}">nowcoder</i> 点赞了你的<b th:utext="${latestLike.entityTypeOfMessage==1?'帖子':'回复'}">帖子</b> ...</a>
 								<ul class="d-inline font-size-12 float-right">
-									<li class="d-inline ml-2"><span class="text-primary">共 <i>3</i> 条会话</span></li>
+									<li class="d-inline ml-2"><span class="text-primary">共 <i th:text="${latestLike.count}">3</i> 条会话</span></li>
 								</ul>
 							</div>
 						</div>
 					</li>
 
 
-					<li class="media pb-3 pt-3 mb-3 border-bottom position-relative">
-						<span class="badge badge-danger">3</span>
+					<li class="media pb-3 pt-3 mb-3 border-bottom position-relative" th:if="${latestLike.latestMessage!=null}">
+						<span class="badge badge-danger" th:utext="${latestFollow.unreadCount!=0?latestLike.unreadCount:''}">3</span>
 						<img src="http://static.nowcoder.com/images/head/follow.png" class="mr-4 user-header" alt="通知图标">
 						<div class="media-body">
 							<h6 class="mt-0 mb-3">
 								<span>关注</span>
-								<span class="float-right text-muted font-size-12">2019-04-28 14:13:25</span>
+								<span class="float-right text-muted font-size-12" th:utext="${#dates.format(latestFollow.latestMessage.createTime,'yyyy-MM-dd HH:mm:ss')}">2019-04-28 14:13:25</span>
 							</h6>
 							<div>
-								<a href="notice-detail.html">用户 <i>nowcoder</i> 关注了你 ...</a>
+								<a th:href="@{/notice/detail/follow}">用户 <i th:utext="${latestFollow.userOfMessage.username}">nowcoder</i> 关注了你 ...</a>
 								<ul class="d-inline font-size-12 float-right">
-									<li class="d-inline ml-2"><span class="text-primary">共 <i>3</i> 条会话</span></li>
+									<li class="d-inline ml-2"><span class="text-primary">共 <i th:text="${latestFollow.count}">3</i> 条会话</span></li>
 								</ul>
 							</div>
 						</div>
@@ -137,7 +137,7 @@
 		</div>
 
 		<!-- 尾部 -->
-		<footer class="bg-dark">
+		<footer class="bg-dark" th:replace="index::footer">
 			<div class="container">
 				<div class="row">
 					<!-- 二维码 -->
@@ -202,6 +202,6 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
-	<script src="../js/global.js"></script>
+	<script th:src="@{/js/global.js}"></script>
 </body>
 </html>

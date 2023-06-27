@@ -20,4 +20,6 @@ public class MessageVO {
 
     int count;
     int unreadCount;
+
+    User fromUserOfMessage;
 }

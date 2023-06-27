@@ -3,6 +3,7 @@ package org.scuvis.community.config;
 import org.scuvis.community.controller.interceptor.AlphaInterceptor;
 import org.scuvis.community.controller.interceptor.LoginRequiredInterceptor;
 import org.scuvis.community.controller.interceptor.LoginTicketInterceptor;
+import org.scuvis.community.controller.interceptor.MessageInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -25,6 +26,9 @@ public class WebMVCConfig implements WebMvcConfigurer {
     @Autowired
     LoginRequiredInterceptor loginRequiredInterceptor;
 
+    @Autowired
+    MessageInterceptor messageInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(alphaInterceptor)
@@ -36,5 +40,8 @@ public class WebMVCConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(loginRequiredInterceptor)
                 .excludePathPatterns("/**/*.css","/**/*.js","/**/*.png","/**/*.jpg","/**/*.jpeg");
+
+        registry.addInterceptor(messageInterceptor)
+                .excludePathPatterns("/**/*.css", "/**/*.js", "/**/*.png", "/**/*.jpg", "/**/*.jpeg");
     }
 }

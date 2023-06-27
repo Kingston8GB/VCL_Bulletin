@@ -4,6 +4,7 @@ import org.scuvis.community.entity.Message;
 import org.scuvis.community.entity.Page;
 import org.scuvis.community.entity.User;
 import org.scuvis.community.entity.vo.MessageVO;
+import org.scuvis.community.entity.vo.NoticeDetailVO;
 import org.scuvis.community.service.MessageService;
 import org.scuvis.community.service.UserService;
 import org.scuvis.community.util.CommunityConstant;
@@ -182,5 +183,24 @@ public class MessageController implements CommunityConstant {
         int noticeUnreadCount = messageService.findNoticeUnreadCountByTopic(loginUser.getId(), null);
         model.addAttribute("noticeUnreadCount", noticeUnreadCount);
         return "/site/notice";
+    }
+
+    @RequestMapping(path = "/notice/detail/{topic}", method = RequestMethod.GET)
+    public String getNoticeDetail(@PathVariable("topic") String topic, Page page, Model model) {
+        User loginUser = hostHolder.getUser();
+        if(loginUser == null){
+            throw new IllegalArgumentException("当前用户未登录！");
+        }
+
+        page.setLimit(5);
+        page.setPath("/notice/detail/" + topic);
+        page.setRows(messageService.findNoticeCountByTopic(loginUser.getId(),topic));
+        List<NoticeDetailVO> noticeDetailVOList = messageService.findNoticesByTopic(loginUser.getId(), topic, page.getOffset(), page.getLimit());
+
+        model.addAttribute("noticeList",noticeDetailVOList);
+
+
+
+        return "/site/notice-detail";
     }
 }
