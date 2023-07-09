@@ -7,7 +7,7 @@ import org.aspectj.lang.annotation.*;
 //@Aspect
 public class AlphaAspect {
 
-    @Pointcut("execution(* com.nowcoder.community.service.*.*(..))")
+    @Pointcut("execution(* org.scuvis.community.service.*.*(..))")
     public void pointcut() {
 
     }

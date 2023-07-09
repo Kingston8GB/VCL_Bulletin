@@ -32,6 +32,11 @@ public class HomeController {
     @Autowired
     LikeService likeService;
 
+    @GetMapping("/")
+    public String root(){
+        return "forward:/index";
+    }
+
     @GetMapping({"/index","/index*"})
     public String getIndexPage(Model model, Page page){
         // page已经自动注入到model里了
