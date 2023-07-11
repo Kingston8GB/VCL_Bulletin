@@ -53,7 +53,7 @@ public class RedisUtil {
     }
 
     public static String getUserKey(Integer userId){
-        return PREFIX_TICKET + userId;
+        return PREFIX_USER + userId;
     }
 
 }

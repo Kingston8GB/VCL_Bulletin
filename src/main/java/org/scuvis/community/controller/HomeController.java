@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,5 +65,11 @@ public class HomeController {
     @GetMapping("/error")
     public String getErrorPage(){
         return "/error/500";
+    }
+
+    // 拒绝访问时的提示页面
+    @RequestMapping(path = "/denied", method = RequestMethod.GET)
+    public String getDeniedPage() {
+        return "/error/404";
     }
 }

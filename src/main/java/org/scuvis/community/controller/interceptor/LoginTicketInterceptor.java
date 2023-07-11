@@ -6,6 +6,10 @@ import org.scuvis.community.service.UserService;
 import org.scuvis.community.util.CookieUtil;
 import org.scuvis.community.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -41,6 +45,11 @@ public class LoginTicketInterceptor implements HandlerInterceptor {
                 User u = userService.findUserById(loginTicket.getUserId());
                 // 存入threadlocal，在请求返回前不会销毁
                 hostHolder.setUser(u);
+
+
+                // 构建我们自己认证的结果,并存入SecurityContext,以便于Security进行授权.
+                Authentication authentication = new UsernamePasswordAuthenticationToken(u,u.getPassword(),userService.getAuthorities(u.getId()));
+                SecurityContextHolder.setContext(new SecurityContextImpl(authentication));
             }
         }
         return true;
@@ -57,5 +66,6 @@ public class LoginTicketInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         hostHolder.clear();
+        // SecurityContextHolder.clearContext();
     }
 }

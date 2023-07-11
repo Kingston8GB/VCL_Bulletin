@@ -23,4 +23,8 @@ public interface CommunityConstant {
     String TOPIC_LIKE = "like";
     String TOPIC_FOLLOW = "follow";
     int NOTICE_FROM_ID = 1;
+
+    String AUTHORITY_ADMIN="admin";
+    String AUTHORITY_USER="user";
+    String AUTHORITY_MODERATOR="moderator";
 }
