@@ -1,8 +1,8 @@
-package org.scuvis.community.dao.elasticsearch;
-
-import org.scuvis.community.entity.DiscussPost;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
-import org.springframework.stereotype.Repository;
+// package org.scuvis.community.dao.elasticsearch;
+//
+// import org.scuvis.community.entity.DiscussPost;
+// import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+// import org.springframework.stereotype.Repository;
 
 /**
  * @author Xiyao Li
