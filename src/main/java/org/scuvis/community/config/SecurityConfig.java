@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                         "/comment/add",
                         "/letter/**",
                         "/notice/**",
-                        // "/like",
+                        "/like",
                         "/follow",
                         "/unfollow"
                 )
@@ -50,7 +50,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                         AUTHORITY_ADMIN,AUTHORITY_MODERATOR,AUTHORITY_USER
                 )
                 .antMatchers(
-                        "/like"
+                        "/top",
+                        "/wonderful"
+                )
+                .hasAnyAuthority(
+                        AUTHORITY_MODERATOR
+                )
+                .antMatchers(
+                        "/delete"
                 )
                 .hasAnyAuthority(
                         AUTHORITY_ADMIN

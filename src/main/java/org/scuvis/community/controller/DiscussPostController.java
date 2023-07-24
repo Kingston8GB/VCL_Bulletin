@@ -71,4 +71,29 @@ public class DiscussPostController {
 
         return CommunityUtil.getJSONString(200,"帖子添加成功！");
     }
+
+    @PostMapping("/top")
+    @ResponseBody
+    public String setTop(int postId){
+        int type = discussPostService.findDiscussPostById(postId).getType();
+
+        discussPostService.updateTypeById(postId,type^1);
+        return CommunityUtil.getJSONString(0);
+    }
+
+    @PostMapping("/wonderful")
+    @ResponseBody
+    public String setWonderful(int postId){
+        int status = discussPostService.findDiscussPostById(postId).getStatus();
+
+        discussPostService.updateStatusById(postId,status^1);
+        return CommunityUtil.getJSONString(0);
+    }
+
+    @PostMapping("/delete")
+    @ResponseBody
+    public String setDelete(int postId){
+        discussPostService.updateStatusById(postId,2);
+        return CommunityUtil.getJSONString(0);
+    }
 }

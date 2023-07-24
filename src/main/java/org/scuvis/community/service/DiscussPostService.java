@@ -118,4 +118,12 @@ public class DiscussPostService {
     public int updateCommentCount(int commentCount, int id) {
         return discussPostMapper.updateCommentCount(id, commentCount);
     }
+
+    public int updateTypeById(int id, int type){
+        return discussPostMapper.updateTypeById(id, type);
+    }
+
+    public int updateStatusById(int id, int status){
+        return discussPostMapper.updateStatusById(id, status);
+    }
 }

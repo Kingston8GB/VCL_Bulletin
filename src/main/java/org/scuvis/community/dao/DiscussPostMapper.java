@@ -26,6 +26,6 @@ public interface DiscussPostMapper {
 
     int updateTypeById(@Param("id") int id, @Param("type") int type);
 
-    int updateStatusById(@Param("id") int id, @Param("type") int type);
+    int updateStatusById(@Param("id") int id, @Param("status") int status);
 
 }

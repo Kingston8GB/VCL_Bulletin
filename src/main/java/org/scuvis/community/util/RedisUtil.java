@@ -1,5 +1,7 @@
 package org.scuvis.community.util;
 
+import java.util.Date;
+
 /**
  * @author Xiyao Li
  * @date 2023/06/19 15:25
@@ -14,6 +16,9 @@ public class RedisUtil {
     public static final String PREFIX_KAPTCHA = "kaptcha:";
     public static final String PREFIX_TICKET = "ticket:";
     public static final String PREFIX_USER = "user:";
+
+    public static final String PREFIX_UV = "uv:";
+    public static final String PREFIX_DAU = "dau:";
 
     public static final String SPLIT = ":";
 
@@ -56,4 +61,19 @@ public class RedisUtil {
         return PREFIX_USER + userId;
     }
 
+    public static String getUVKey(String date){
+        return PREFIX_UV + date;
+    }
+
+    public static String getUVKey(String startDate, String endDate){
+        return PREFIX_UV + startDate + SPLIT + endDate;
+    }
+
+    public static String getDAUKey(String date){
+        return PREFIX_DAU + date;
+    }
+
+    public static String getDAUKey(String startDate, String endDate){
+        return PREFIX_DAU + startDate + SPLIT + endDate;
+    }
 }
