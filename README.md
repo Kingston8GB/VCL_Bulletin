@@ -20,12 +20,4 @@ A community for daily work of SCUVIS.
 
 (The project started on 20230603, which is under construction now…)
 
-20230606: 开发社区首页
-
-20230607: 发送邮件、开发注册功能
-
-20230608: 登录、登出功能
-
-20230609：检查登录状态
-
-20230610：过滤敏感词
+(hidden)
