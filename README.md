@@ -18,6 +18,6 @@ A community for daily work of SCUVIS.
 
 **Dev Log:**
 
-(The project started on 20230603, which is under construction now…)
+(The project started on 20230503)
 
 (hidden)
